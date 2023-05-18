@@ -5,15 +5,23 @@ import mongoose from 'mongoose';
 
 // Conexión base de datos
 
-const uri = process.env.MONGODB_URI;
-const options = {useNewUrlParser: true, useUnifiedTopology: true};
-
-mongoose.set('strictQuery', false);
-
-mongoose.connect(uri, options).then(
-  () => { console.log('Conectado a DB') },
-  err => { console.log(err) }
-);
+mongoose
+  .connect(
+    'mongodb+srv://' +
+    process.env.MONGO_USER +
+    ':' +
+    process.env.MONGO_PASS +
+    '@clusterproyecto1.dwjo7jw.mongodb.net/BD-Proyecto1Backend?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log('CONEXION EXITOSA');
+  })
+  .catch((err) => { console.error('CONEXION FALLIDA', err.message); });
+mongoose.Promise = global.Promise;
 
 
 const app = express();
